@@ -19,7 +19,9 @@ const state = {
 function updateUI(data) {
   // TODO: Implement the UI update
   // 1. Get the grid element
+  const grid = document.getElementById("gridElement");
   // 2. Clear existing content
+  grid.innerHTML = "";
   // 3. For each character in data.results:
   //    - Create a card element
   //    - Add character image, name, status, species, location

@@ -8,11 +8,13 @@
  * @param {number} wait - The number of milliseconds to delay
  * @returns {Function} The debounced function
  */
-export function debounce(func, wait) {
+export function debounce(fn, wait) {
   // TODO: Implement the debounce function
-  // 1. Create a variable to store the timeout ID
-  // 2. Return a function that wraps the original function
-  // 3. Clear the existing timeout if the function is called again
-  // 4. Set a new timeout to call the function after the wait period
-  throw new Error("debounce not implemented");
+  let timeout;
+  return (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      fn(...args);
+    }, wait);
+  };
 }
