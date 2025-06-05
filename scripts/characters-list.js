@@ -26,8 +26,25 @@ function updateUI(data) {
   //    - Create a card element
   //    - Add character image, name, status, species, location
   //    - Make the card clickable (link to character-detail.html)
+  const characters = data.results;
+  grid.innerHTML = characters
+    .map((character) => {
+      const link = `character-detail.htmlcharacterId=${character.id}`;
+      return `           
+     <li id="characterItem_${character.id}" class="character-item">
+     <img src ="${character.image}" alt="${character.name}" />
+              <h4>
+                <a href="${link}" class="character-link">
+                  ${character.name}
+                </a>
+              </h4>
+              <p>status: ${character.status}</p>
+              <p>species: ${character.species}</p>
+            </li>`;
+    })
+    .join("");
   // 4. Update pagination UI
-  throw new Error("updateUI not implemented");
+  // throw new Error("updateUI not implemented");
 }
 
 /**
@@ -36,11 +53,27 @@ function updateUI(data) {
 function loadCharacters() {
   // TODO: Implement character loading
   // 1. Show loading state
+  const BASE_URL = "https://rickandmortyapi.com/api/character";
   // 2. Fetch character data using the API module
+  return fetch(BASE_URL)
+    .then((response) => {
+      if (!response.ok) {
+        // If the response status is not 2xx, throw an error
+        throw new Error("HTTP error! Status: " + response.status);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      return data;
+    })
+    .catch((error) => {
+      console.log("Fetch error:", error.message);
+    });
   // 3. Update UI with the results
   // 4. Handle any errors
   // 5. Hide loading state
-  throw new Error("loadCharacters not implemented");
+  // throw new Error("loadCharacters not implemented");
 }
 
 // TODO: Add event listeners
@@ -48,3 +81,7 @@ function loadCharacters() {
 // 2. Next page button click
 // 3. Search input with debounce
 // 4. Call loadCharacters() on page load
+
+addEventListener("DOMContentLoaded", () => {
+  loadCharacters().then((data) => updateUI(data));
+});
