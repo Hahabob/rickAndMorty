@@ -53,9 +53,6 @@ function updateUI(episode, characters) {
   document.title = episode.name;
 
   const detailContainer = document.getElementById("episodeDetail");
-  const characterId = splitUrlForId(episode.characters);
-  const characterLink = `character-detail.html?characterId=${characterId}`;
-
   detailContainer.innerHTML = `
     <div class="episode-info">
       <h4>${episode.name}</h4>
@@ -68,6 +65,7 @@ function updateUI(episode, characters) {
 
   characterContainer.innerHTML = characters
     .map((character) => {
+      const characterLink = `character-detail.html?characterId=${character.id}`;
       return `           
      <li id="characterItem_${character.id}" class="character-item">
      <img src ="${character.image}" alt="${character.name}" />
