@@ -40,6 +40,7 @@ function loadCharacterDetails() {
       ]);
     })
     .then(([data, episodes]) => {
+      console.log(episodes);
       updateUI(data, episodes);
     })
     .catch((error) => {
@@ -58,7 +59,7 @@ function updateUI(character, episodes) {
   // TODO: Implement the UI update
   document.title = character.name;
   // 1. Get the detail container element
-  const details = document.getElementById("characterDetail");
+  const detailContainer = document.getElementById("characterDetail");
   const originLink = splitUrlForId(character.origin.url)
     ? `location-detail.html?locationId=${character.origin.url}`
     : "#";
@@ -66,7 +67,7 @@ function updateUI(character, episodes) {
     ? `location-detail.html?locationId=${character.location.url}`
     : "#";
   // 2. Create character header with image and basic info
-  details.innerHTML = `
+  detailContainer.innerHTML = `
   <img src ="${character.image}" alt="${character.name}" />
            <h4>
             ${character.name}
@@ -86,6 +87,22 @@ function updateUI(character, episodes) {
             </p>
   `;
 
+  const episodeContainer = document.getElementById("characterEpisode");
+  episodeContainer.innerHTML = episodes
+    .map((episode) => {
+      const episodeLink = `episode-detail.html?episodeId=${episode.id}`;
+      return `           
+     <li id="episodeItem_${episode.id}" class="episode-item">
+              <h4>
+                <a href="${episodeLink}" class="episode-link">
+                  ${episode.name}
+                </a>
+              </h4>
+              <p>${episode.episode}</p>
+              <p>air date: ${episode.air_date}</p>
+            </li>`;
+    })
+    .join("");
   // 3. Add links to origin and current location
   // 4. Create episodes section with all episodes the character appears in
   // 5. Handle empty states and errors
