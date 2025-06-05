@@ -9,6 +9,14 @@ import { getUrlSearchParamByKey } from "./modules/utils.js";
  * Loads and displays details for a specific character
  * @param {string} id - The character ID to load
  */
+const characterId = getUrlSearchParamByKey("characterId");
+
+// if (!characterId) {
+//   container.innerHTML = "<p class='error'>Invalid character ID</p>";
+// } else {
+//   container.innerHTML = "<p>Loading character details...</p>";
+//   addEventListener("DOMContentLoaded", loadCharacterDetails);
+// }
 
 // 3. Extract episode IDs from character.episode URLs
 // 4. Fetch all episodes this character appears in
@@ -19,7 +27,6 @@ import { getUrlSearchParamByKey } from "./modules/utils.js";
 function loadCharacterDetails() {
   // 1. Start by showing loading state
   const BASE_URL = "https://rickandmortyapi.com/api/character";
-  const characterId = getUrlSearchParamByKey("characterId");
   // 2. Fetch character data
   fetch(`${BASE_URL}/${characterId}`)
     .then((response) => {
