@@ -2,7 +2,11 @@
  * Locations Page Script
  * Handles the display and interaction of the locations list page
  */
-import { getUrlSearchParamByKey } from "./modules/utils.js";
+import {
+  getUrlSearchParamByKey,
+  showSpinner,
+  hideSpinner,
+} from "./modules/utils.js";
 
 let page = Number(getUrlSearchParamByKey("page")) || 1;
 const BASE_URL = "https://rickandmortyapi.com/api/location";
@@ -58,14 +62,14 @@ function updateUI(data) {
 function nextPage() {
   page++;
   updateURL();
-  loadCharacters().then(updateUI);
+  loadLocations().then(updateUI);
 }
 
 function prevPage() {
   if (page > 1) {
     page--;
     updateURL();
-    loadCharacters().then(updateUI);
+    loadLocations().then(updateUI);
   }
 }
 
@@ -79,6 +83,7 @@ function updateURL() {
  * Loads location data from the API
  */
 function loadLocations() {
+  showSpinner();
   // 2. Fetch character data using the API module
   return fetch(`${BASE_URL}?page=${page}`)
     .then((response) => {
@@ -90,9 +95,11 @@ function loadLocations() {
     })
     .then((data) => {
       console.log(data);
+      hideSpinner();
       return data;
     })
     .catch((error) => {
+      hideSpinner();
       console.log("Fetch error:", error.message);
     });
 }

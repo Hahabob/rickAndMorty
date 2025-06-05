@@ -1,4 +1,8 @@
-import { getUrlSearchParamByKey } from "./modules/utils.js";
+import {
+  getUrlSearchParamByKey,
+  showSpinner,
+  hideSpinner,
+} from "./modules/utils.js";
 
 /**
  * Episode Detail Page Script
@@ -10,9 +14,10 @@ import { getUrlSearchParamByKey } from "./modules/utils.js";
  * @param {string} id - The episode ID to load
  */
 const episodeId = getUrlSearchParamByKey("episodeId");
+const BASE_URL = "https://rickandmortyapi.com/api/episode";
 
 function loadEpisodeDetails(id) {
-  const BASE_URL = "https://rickandmortyapi.com/api/episode";
+  showSpinner();
 
   fetch(`${BASE_URL}/${episodeId}`)
     .then((response) => {
@@ -35,9 +40,11 @@ function loadEpisodeDetails(id) {
     .then(([data, characters]) => {
       console.log(characters);
       updateUI(data, characters);
+      hideSpinner();
     })
     .catch((error) => {
       console.log("Fetch error:", error.message);
+      hideSpinner();
     });
 }
 

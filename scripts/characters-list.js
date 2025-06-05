@@ -2,7 +2,11 @@
  * Characters Page Script
  * Handles the display and interaction of the characters list page
  */
-import { getUrlSearchParamByKey } from "./modules/utils.js";
+import {
+  getUrlSearchParamByKey,
+  showSpinner,
+  hideSpinner,
+} from "./modules/utils.js";
 
 let page = Number(getUrlSearchParamByKey("page")) || 1;
 const BASE_URL = "https://rickandmortyapi.com/api/character";
@@ -80,6 +84,7 @@ function updateURL() {
  * Loads character data from the API
  */
 function loadCharacters() {
+  showSpinner();
   // 2. Fetch character data using the API module
   return fetch(`${BASE_URL}?page=${page}`)
     .then((response) => {
@@ -91,9 +96,11 @@ function loadCharacters() {
     })
     .then((data) => {
       console.log(data);
+      hideSpinner();
       return data;
     })
     .catch((error) => {
+      hideSpinner();
       console.log("Fetch error:", error.message);
     });
 }

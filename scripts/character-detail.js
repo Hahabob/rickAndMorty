@@ -1,4 +1,8 @@
-import { getUrlSearchParamByKey } from "./modules/utils.js";
+import {
+  getUrlSearchParamByKey,
+  showSpinner,
+  hideSpinner,
+} from "./modules/utils.js";
 
 /**
  * Character Detail Page Script
@@ -10,6 +14,7 @@ import { getUrlSearchParamByKey } from "./modules/utils.js";
  * @param {string} id - The character ID to load
  */
 const characterId = getUrlSearchParamByKey("characterId");
+const BASE_URL = "https://rickandmortyapi.com/api/character";
 
 // if (!characterId) {
 //   container.innerHTML = "<p class='error'>Invalid character ID</p>";
@@ -19,8 +24,7 @@ const characterId = getUrlSearchParamByKey("characterId");
 // }
 
 function loadCharacterDetails() {
-  // 1. Start by showing loading state
-  const BASE_URL = "https://rickandmortyapi.com/api/character";
+  showSpinner();
   // 2. Fetch character data
   fetch(`${BASE_URL}/${characterId}`)
     .then((response) => {
@@ -43,9 +47,11 @@ function loadCharacterDetails() {
     .then(([data, episodes]) => {
       console.log(episodes);
       updateUI(data, episodes);
+      hideSpinner();
     })
     .catch((error) => {
       console.log("Fetch error:", error.message);
+      hideSpinner();
     });
 }
 function splitUrlForId(url) {

@@ -31,3 +31,15 @@ export function getUrlSearchParamByKey(key) {
 // toggleButton.addEventListener("click", () => {
 //   menuLinks.classList.toggle("open");
 // });
+
+// === loading spinner global function ===
+
+export function showSpinner() {
+  const spinner = document.getElementById("loadingSpinner");
+  if (spinner) spinner.classList.remove("hidden");
+}
+
+export function hideSpinner() {
+  const spinner = document.getElementById("loadingSpinner");
+  if (spinner) spinner.classList.add("hidden");
+}

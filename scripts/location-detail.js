@@ -1,10 +1,16 @@
 // location-detail.js
 
 // ✅ [Step 1] - Import helper to extract the location ID from the URL
-import { getUrlSearchParamByKey } from "./modules/utils.js";
+import {
+  getUrlSearchParamByKey,
+  showSpinner,
+  hideSpinner,
+} from "./modules/utils.js";
 
 // ✅ [Step 2] - Extract the ID from the URL
 const locationId = getUrlSearchParamByKey("locationId");
+// ✅ [Step 2.5] - extract location data from API
+const BASE_URL = "https://rickandmortyapi.com/api/location";
 
 // ✅ [Step 3] - Get the container for displaying the data
 const container = document.getElementById("locationElement");
@@ -19,8 +25,7 @@ if (!locationId) {
 
 // ✅ [Function 1] - Load the location and its residents
 function loadLocationDetails() {
-  // ✅ [Step 6] - Fetch the location data from API
-  const BASE_URL = "https://rickandmortyapi.com/api/location";
+  showSpinner();
   fetch(`${BASE_URL}/${locationId}`)
     .then((res) => {
       if (!res.ok) throw new Error("Failed to fetch location");
@@ -37,10 +42,12 @@ function loadLocationDetails() {
     })
     .then(([data, residents]) => {
       updateLocationDetails(data, residents);
+      hideSpinner();
     })
     .catch((err) => {
       container.innerHTML = "<p class='error'>Something went wrong </p>";
       console.error(err);
+      hideSpinner();
     });
 }
 

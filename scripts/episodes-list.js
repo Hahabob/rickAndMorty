@@ -2,7 +2,11 @@
  * Episodes Page Script
  * Handles the display and interaction of the episodes list page
  */
-import { getUrlSearchParamByKey } from "./modules/utils.js";
+import {
+  getUrlSearchParamByKey,
+  showSpinner,
+  hideSpinner,
+} from "./modules/utils.js";
 
 let page = Number(getUrlSearchParamByKey("page")) || 1;
 const BASE_URL = "https://rickandmortyapi.com/api/episode";
@@ -58,14 +62,14 @@ function updateUI(data) {
 function nextPage() {
   page++;
   updateURL();
-  loadCharacters().then(updateUI);
+  loadEpisodes().then(updateUI);
 }
 
 function prevPage() {
   if (page > 1) {
     page--;
     updateURL();
-    loadCharacters().then(updateUI);
+    loadEpisodes().then(updateUI);
   }
 }
 
@@ -78,6 +82,7 @@ function updateURL() {
  * Loads episode data from the API
  */
 function loadEpisodes() {
+  showSpinner();
   // 2. Fetch character data using the API module
   return fetch(`${BASE_URL}?page=${page}`)
     .then((response) => {
@@ -89,9 +94,11 @@ function loadEpisodes() {
     })
     .then((data) => {
       console.log(data);
+      hideSpinner();
       return data;
     })
     .catch((error) => {
+      hideSpinner();
       console.log("Fetch error:", error.message);
     });
 }
