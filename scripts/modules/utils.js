@@ -18,3 +18,8 @@ export function debounce(fn, wait) {
     }, wait);
   };
 }
+
+export function getUrlSearchParamByKey(key) {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(key);
+}
