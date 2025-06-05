@@ -14,7 +14,7 @@ if (!locationId) {
   container.innerHTML = "<p class='error'>Invalid location ID</p>";
 } else {
   container.innerHTML = "<p>Loading location details...</p>";
-  loadLocationDetails(locationId); // ✅ [Step 5] - Begin loading the data
+  loadLocationDetails(); // ✅ [Step 5] - Begin loading the data
 }
 
 // ✅ [Function 1] - Load the location and its residents
