@@ -74,7 +74,6 @@ function updateUI(character, episodes) {
             <p>status: ${character.status}</p>
             <p>species: ${character.species}</p>
             <p>gender: ${character.gender}</p>
-            <p>gender: ${character.gender}</p>
             <p>                
               <a href="${originLink}" class="location-link">
                   origin :${character.origin.name}
