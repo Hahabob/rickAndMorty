@@ -7,15 +7,18 @@
     <link rel="stylesheet" href="../styles/main.css" />
   </head>
   <body>
-    <header class="navbar">
-      <nav>
-        <ul class="nav-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="characters.html">Characters</a></li>
-          <li><a href="locations.html">Locations</a></li>
-        </ul>
-      </nav>
-    </header>
+    <nav class="navbar">
+      <button id="menu-toggle" aria-label="Toggle menu">☰</button>
+      <div class="nav-left">
+        <span class="nav-emoji">🌌</span>
+        <div class="nav-title">Rick & Morty Explorer</div>
+      </div>
+      <div id="menu-links" class="nav-links">
+        <a href="characters.html">Characters</a>
+        <a href="episodes.html">Episodes</a>
+        <a href="locations.html">Locations</a>
+      </div>
+    </nav>
 
     <div id="gridElement"></div>
     <footer class="site-footer">

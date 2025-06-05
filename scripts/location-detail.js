@@ -77,3 +77,5 @@ function updateLocationDetails(location, residents) {
   // ✅ [Step 13] - Inject the HTML into the container
   container.innerHTML = html;
 }
+import { setupNavbarToggle } from "../scripts/modules/utils.js";
+setupNavbarToggle();

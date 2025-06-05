@@ -72,6 +72,8 @@ function loadLocations() {
 // 2. Next page button click
 // 3. Search input with debounce
 // 4. Call loadLocations() on page load
+import { setupNavbarToggle } from "../scripts/modules/utils.js";
+setupNavbarToggle();
 addEventListener("DOMContentLoaded", () => {
   loadLocations().then((data) => updateUI(data));
 });

@@ -111,7 +111,8 @@ function loadCharacters() {
 // 2. Next page button click
 // 3. Search input with debounce
 // 4. Call loadCharacters() on page load
-
+import { setupNavbarToggle } from "../scripts/modules/utils.js";
+setupNavbarToggle();
 addEventListener("DOMContentLoaded", () => {
   document.getElementById("nextBtn").addEventListener("click", nextPage);
   document.getElementById("prevBtn").addEventListener("click", prevPage);
