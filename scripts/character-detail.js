@@ -1,3 +1,5 @@
+import { getUrlSearchParamByKey } from "./modules/utils.js";
+
 /**
  * Character Detail Page Script
  * Handles the display of detailed information for a single character
@@ -7,16 +9,33 @@
  * Loads and displays details for a specific character
  * @param {string} id - The character ID to load
  */
-function loadCharacterDetails(id) {
+function loadCharacterDetails() {
   // TODO: Implement character detail loading
   // 1. Show loading state
+  const BASE_URL = "https://rickandmortyapi.com/api/character";
+  const characterId = getUrlSearchParamByKey("characterId");
   // 2. Fetch character data using the API module
+  return fetch(`${BASE_URL}/${characterId}`)
+    .then((response) => {
+      if (!response.ok) {
+        // If the response status is not 2xx, throw an error
+        throw new Error("HTTP error! Status: " + response.status);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      const episodes = data.episode;
+    })
+    .catch((error) => {
+      console.log("Fetch error:", error.message);
+    });
   // 3. Extract episode IDs from character.episode URLs
   // 4. Fetch all episodes this character appears in
   // 5. Update UI with character and episode data
   // 6. Handle any errors
   // 7. Hide loading state
-  throw new Error("loadCharacterDetails not implemented");
+  // throw new Error("loadCharacterDetails not implemented");
 }
 
 /**
@@ -39,3 +58,4 @@ function updateUI(character, episodes) {
 // 2. Validate the ID
 // 3. Load character details if ID is valid
 // 4. Show error if ID is invalid or missing
+addEventListener("DOMContentLoaded", loadCharacterDetails);
