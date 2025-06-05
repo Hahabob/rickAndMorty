@@ -2,12 +2,22 @@
  * Location Detail Page Script
  * Handles the display of detailed information for a single location
  */
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+console.log(id);
 
 /**
  * Loads and displays details for a specific location
  * @param {string} id - The location ID to load
  */
 function loadLocationDetails(id) {
+  const url = `https://rickandmortyapi.com/api/location/${id}`;
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+    });
+
   // TODO: Implement location detail loading
   // 1. Show loading state
   // 2. Fetch location data using the API module

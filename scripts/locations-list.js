@@ -18,28 +18,53 @@ const state = {
     
  */
 function updateUI(data) {
-  // TODO: Implement the UI update
-  // 1. Get the grid element
-  // 2. Clear existing content
-  // 3. For each location in data.results:
-  //    - Create a card element
-  //    - Add location name, type, dimension, and resident count
-  //    - Make the card clickable (link to location-detail.html)
-  // 4. Update pagination UI
-  throw new Error("updateUI not implemented");
+  const grid = document.getElementById("gridElement");
+
+  grid.innerHTML = "";
+
+  const locations = data.results;
+
+  grid.innerHTML = locations
+    .map((location) => {
+      const link = `location-detail.html?locationId=${location.id}`;
+
+      return `
+        <li id="locationItem_${location.id}" class="location-item">
+          <h4>
+            <a href="${link}" class="locations-link">
+              ${location.name}
+            </a>
+          </h4>
+          <p>Type: ${location.type}</p>
+          <p>Dimension: ${location.dimension}</p>
+          <p>Residents: ${location.residents.length}</p>
+        </li>
+      `;
+    })
+    .join("");
 }
 
 /**
  * Loads location data from the API
  */
 function loadLocations() {
-  // TODO: Implement location loading
-  // 1. Show loading state
-  // 2. Fetch location data using the API module
-  // 3. Update UI with the results
-  // 4. Handle any errors
-  // 5. Hide loading state
-  throw new Error("loadLocations not implemented");
+  const BASE_URL = "https://rickandmortyapi.com/api/location";
+  // 2. Fetch character data using the API module
+  return fetch(BASE_URL)
+    .then((response) => {
+      if (!response.ok) {
+        // If the response status is not 2xx, throw an error
+        throw new Error("HTTP error! Status: " + response.status);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      return data;
+    })
+    .catch((error) => {
+      console.log("Fetch error:", error.message);
+    });
 }
 
 // TODO: Add event listeners
@@ -47,3 +72,6 @@ function loadLocations() {
 // 2. Next page button click
 // 3. Search input with debounce
 // 4. Call loadLocations() on page load
+addEventListener("DOMContentLoaded", () => {
+  loadLocations().then((data) => updateUI(data));
+});
