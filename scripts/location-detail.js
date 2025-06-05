@@ -18,9 +18,10 @@ if (!locationId) {
 }
 
 // ✅ [Function 1] - Load the location and its residents
-function loadLocationDetails(id) {
+function loadLocationDetails() {
   // ✅ [Step 6] - Fetch the location data from API
-  fetch(`https://rickandmortyapi.com/api/location/${id}`)
+  const BASE_URL = "https://rickandmortyapi.com/api/location";
+  fetch(`${BASE_URL}/${locationId}`)
     .then((res) => {
       if (!res.ok) throw new Error("Failed to fetch location");
       return res.json();
