@@ -42,10 +42,11 @@ li{
 #gridElement{
       display: grid;
       gap: 1rem;
-      grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+      grid-template-columns: repeat(auto-fit,minmax(190px,1fr));
       width:100%;
 }
 .character-item{
+  margin-inline: auto;
   border:1px black double;
   padding:1rem;
   border-radius: 1rem;
