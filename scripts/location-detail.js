@@ -26,34 +26,17 @@ function loadLocationDetails() {
       if (!res.ok) throw new Error("Failed to fetch location");
       return res.json();
     })
-    .then((locationData) => {
-      const residentUrls = locationData.residents;
-
-      // ✅ [Step 7] - Check if there are any residents
-      if (residentUrls.length === 0) {
-        updateLocationDetails(locationData, []);
-      } else {
-        // ✅ [Step 8] - Extract resident IDs
-        const residentIds = residentUrls.map((url) => url.split("/").pop());
-
-        // ✅ [Step 9] - Fetch all residents in one request
-        fetch(
-          `https://rickandmortyapi.com/api/character/${residentIds.join(",")}`
-        )
-          .then((res) => {
-            if (!res.ok) throw new Error("Failed to fetch residents");
-            return res.json();
-          })
-          .then((residentsData) => {
-            // ✅ [Step 10] - Handle single vs multiple residents
-            const residents = Array.isArray(residentsData)
-              ? residentsData
-              : [residentsData];
-
-            // ✅ [Step 11] - Update the UI with both location and residents
-            updateLocationDetails(locationData, residents);
-          });
-      }
+    .then((data) => {
+      const promisedResidents = data.residents.map((url) => {
+        return fetch(url).then((res) => res.json());
+      });
+      return Promise.all([
+        Promise.resolve(data),
+        Promise.all(promisedResidents),
+      ]);
+    })
+    .then(([data, residents]) => {
+      updateLocationDetails(data, residents);
     })
     .catch((err) => {
       container.innerHTML = "<p class='error'>Something went wrong </p>";
@@ -69,17 +52,21 @@ function updateLocationDetails(location, residents) {
     <p><strong>Dimension:</strong> ${location.dimension}</p>
     <h3>Residents:</h3>
   `;
-
   // ✅ [Step 12] - Handle no residents
   if (residents.length === 0) {
     html += "<p>No known residents.</p>";
   } else {
     html += `<div class="residents">`;
     residents.forEach((resident) => {
+      const residentLink = `character-detail.html?characterId=${resident.id}`;
       html += `
         <div class="resident-card">
           <img src="${resident.image}" alt="${resident.name}" />
-          <p><strong>${resident.name}</strong></p>
+          <p>              
+          <a href="${residentLink}" class="character-link">
+                ${resident.name}
+          </a>
+          </p>
           <p>Status: ${resident.status}</p>
         </div>
       `;

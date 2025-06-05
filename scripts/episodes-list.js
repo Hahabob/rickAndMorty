@@ -20,26 +20,54 @@ const state = {
 function updateUI(data) {
   // TODO: Implement the UI update
   // 1. Get the grid element
+  const grid = document.getElementById("episode");
   // 2. Clear existing content
+  grid.innerHTML = "";
   // 3. For each episode in data.results:
   //    - Create a card element
   //    - Add episode name, air date, episode code, and character count
   //    - Make the card clickable (link to episode-detail.html)
+  const episodes = data.results;
+  grid.innerHTML = episodes
+    .map((episode) => {
+      const link = `episodde-detail.html?episodeId=${episode.id}`;
+      return `
+     <li id="episodeItem_${episode.id}" class="episode-item">
+          <h4>
+            <a href="${link}" class="episode-link">
+              ${episode.name}
+            </a>
+          </h4>
+          <p>${episode.episode}</p>
+          <p>air date: ${episode.air_date}</p>
+      </li>`;
+    })
+    .join("");
   // 4. Update pagination UI
-  throw new Error("updateUI not implemented");
+  // throw new Error("updateUI not implemented");
 }
 
 /**
  * Loads episode data from the API
  */
 function loadEpisodes() {
-  // TODO: Implement episode loading
-  // 1. Show loading state
-  // 2. Fetch episode data using the API module
-  // 3. Update UI with the results
-  // 4. Handle any errors
-  // 5. Hide loading state
-  throw new Error("loadEpisodes not implemented");
+  const BASE_URL = "https://rickandmortyapi.com/api/episode";
+  // 2. Fetch character data using the API module
+  return fetch(BASE_URL)
+    .then((response) => {
+      if (!response.ok) {
+        // If the response status is not 2xx, throw an error
+        throw new Error("HTTP error! Status: " + response.status);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      return data;
+    })
+    .catch((error) => {
+      console.log("Fetch error:", error.message);
+    });
 }
 
 // TODO: Add event listeners
@@ -47,3 +75,7 @@ function loadEpisodes() {
 // 2. Next page button click
 // 3. Search input with debounce
 // 4. Call loadEpisodes() on page load
+
+addEventListener("DOMContentLoaded", () => {
+  loadEpisodes().then((data) => updateUI(data));
+});
