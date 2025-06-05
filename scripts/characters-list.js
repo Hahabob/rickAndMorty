@@ -29,7 +29,7 @@ function updateUI(data) {
   const characters = data.results;
   grid.innerHTML = characters
     .map((character) => {
-      const link = `character-detail.htmlcharacterId=${character.id}`;
+      const link = `character-detail.html?characterId=${character.id}`;
       return `           
      <li id="characterItem_${character.id}" class="character-item">
      <img src ="${character.image}" alt="${character.name}" />
