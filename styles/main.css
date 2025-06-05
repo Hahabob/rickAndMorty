@@ -34,20 +34,212 @@ a {
 a {
   text-decoration: none;
 }
-li{
+li {
   list-style: none;
 }
 
-
-#gridElement{
-      display: grid;
-      gap: 1rem;
-      grid-template-columns: repeat(auto-fit,minmax(190px,1fr));
-      width:100%;
+#gridElement {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  width: 100%;
 }
-.character-item{
+.character-item {
   margin-inline: auto;
-  border:1px black double;
-  padding:1rem;
+  border: 1px black double;
+  padding: 1rem;
   border-radius: 1rem;
+}
+/* === GENERAL STRUCTURE === */
+body {
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f9fafb;
+  color: #1f2937;
+  padding: 2rem;
+}
+
+/* === PAGE TITLE === */
+h1,
+h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* === LOCATION DETAIL === */
+#locationElement {
+  max-width: 1000px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+#locationElement p {
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+}
+
+/* === RESIDENTS SECTION === */
+.residents {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  margin-top: 2rem;
+}
+
+.resident-card {
+  background-color: #f3f4f6;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-align: center;
+}
+
+.resident-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.resident-card img {
+  border-radius: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.resident-card p {
+  margin: 0.2rem 0;
+}
+
+/* === CHARACTER ITEM IN LIST === */
+.character-item {
+  background-color: #ffffff;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.06);
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.character-item:hover {
+  transform: scale(1.02);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* === GRID FOR LOCATIONS LIST === */
+#gridElement {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  max-width: 1200px;
+  margin-inline: auto;
+  margin-top: 2rem;
+}
+
+/* === ERROR STYLING === */
+.error {
+  color: #b91c1c;
+  background-color: #fee2e2;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* === LOADING TEXT === */
+#locationElement p:first-of-type {
+  font-style: italic;
+  color: #6b7280;
+}
+/* === Character Details Layout === */
+.character-header {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  margin-bottom: 30px;
+  background: #f0f4f8;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+}
+
+.character-header img {
+  width: 220px;
+  height: auto;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.character-info {
+  flex: 1;
+}
+
+.character-info h4 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  color: #1f2937;
+}
+
+.character-info p {
+  font-size: 18px;
+  margin: 6px 0;
+  color: #374151;
+}
+
+.character-info a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.character-info a:hover {
+  text-decoration: underline;
+}
+.episode-list {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+
+.episode-list::-webkit-scrollbar {
+  height: 8px;
+}
+
+.episode-list::-webkit-scrollbar-thumb {
+  background: #aaa;
+  border-radius: 4px;
+}
+
+.episode-item {
+  min-width: 220px;
+  flex-shrink: 0;
+  background-color: #f3f4f6;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+  scroll-snap-align: start;
+  transition: transform 0.2s ease;
+}
+
+.episode-item:hover {
+  transform: translateY(-4px);
+  background-color: #e5e7eb;
+}
+
+.episode-item h4 {
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+  color: #1e3a8a;
+}
+
+.episode-item p {
+  margin: 0.2rem 0;
+  color: #374151;
+  font-size: 0.95rem;
 }

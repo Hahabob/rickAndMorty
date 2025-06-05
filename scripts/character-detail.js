@@ -70,41 +70,49 @@ function updateUI(character, episodes) {
     : "#";
   // 2. Create character header with image and basic info
   detailContainer.innerHTML = `
-  <img src ="${character.image}" alt="${character.name}" />
-           <h4>
-            ${character.name}
-           </h4>
-            <p>status: ${character.status}</p>
-            <p>species: ${character.species}</p>
-            <p>gender: ${character.gender}</p>
-            <p>                
-              <a href="${originLink}" class="location-link">
-                  origin :${character.origin.name}
-              </a>
-            </p>  
-            <p>
-              <a href="${locationLink}" class="location-link">
-                  location :${character.location.name}
-              </a>              
-            </p>
-  `;
+  <div class="character-header">
+    <img src="${character.image}" alt="${character.name}" />
+    <div class="character-info">
+      <h4>${character.name}</h4>
+      <p><strong>status:</strong> ${character.status}</p>
+      <p><strong>species:</strong> ${character.species}</p>
+      <p><strong>gender:</strong> ${character.gender}</p>
+      <p>
+        <a href="${originLink}" class="location-link">
+          <strong>origin:</strong> ${character.origin.name}
+        </a>
+      </p>
+      <p>
+        <a href="${locationLink}" class="location-link">
+          <strong>location:</strong> ${character.location.name}
+        </a>
+      </p>
+    </div>
+  </div>
+`;
 
   const episodeContainer = document.getElementById("characterEpisode");
-  episodeContainer.innerHTML = episodes
-    .map((episode) => {
-      const episodeLink = `episode-detail.html?episodeId=${episode.id}`;
-      return `           
-     <li id="episodeItem_${episode.id}" class="episode-item">
-              <h4>
-                <a href="${episodeLink}" class="episode-link">
-                  ${episode.name}
-                </a>
-              </h4>
-              <p>${episode.episode}</p>
-              <p>air date: ${episode.air_date}</p>
-            </li>`;
-    })
-    .join("");
+
+  episodeContainer.innerHTML = `
+  <ul class="episode-list">
+    ${episodes
+      .map((episode) => {
+        const episodeLink = `episode-detail.html?episodeId=${episode.id}`;
+        return `
+          <li id="episodeItem_${episode.id}" class="episode-item">
+            <h4>
+              <a href="${episodeLink}" class="episode-link">
+                ${episode.name}
+              </a>
+            </h4>
+            <p>${episode.episode}</p>
+            <p>air date: ${episode.air_date}</p>
+          </li>`;
+      })
+      .join("")}
+  </ul>
+`;
+
   // 3. Add links to origin and current location
   // 4. Create episodes section with all episodes the character appears in
   // 5. Handle empty states and errors
