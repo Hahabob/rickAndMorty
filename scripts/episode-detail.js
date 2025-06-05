@@ -41,9 +41,6 @@ function loadEpisodeDetails(id) {
     });
 }
 
-function splitUrlForId(url) {
-  return url.split("/").pop();
-}
 /**
  * Updates the UI with episode and character data
  * @param {Object} episode - The episode data
