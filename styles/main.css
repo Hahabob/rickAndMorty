@@ -243,3 +243,104 @@ h2 {
   color: #374151;
   font-size: 0.95rem;
 }
+
+/** navigation bar */
+nav{
+    background-color: var(--Dark-gray-blue);
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: stretch;
+    gap: 1rem;
+    height: 3rem;
+    position: relative;
+    padding: 0 1rem;
+}
+nav a{
+    color: white;
+    text-decoration: none;
+}
+nav a:hover{
+    color: var(--Light-lavender);
+}
+
+/* Emoji on left on desktop */
+.nav-emoji {
+  font-size: 1.5rem;
+  color: white;
+  margin-right: 1rem;
+}
+
+/* Hide hamburger toggle on desktop */
+#menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--White);
+  font-size: 1.5rem;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* Title hidden on desktop */
+.nav-title {
+  display: none;
+}
+
+/* Nav links centered */
+#menu-links {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-grow: 1;
+  align-items: center;
+}
+
+/* Mobile styles */
+@media (max-width: 600px) {
+  nav {
+    justify-content: flex-start;
+  }
+
+  /* Show hamburger */
+  #menu-toggle {
+    display: block;
+  }
+
+  /* Hide emoji on mobile */
+  .nav-emoji {
+    display: none;
+  }
+
+  /* Show title on mobile */
+  .nav-title {
+    display: block;
+    color: white;
+    font-weight: 700;
+    font-size: 1.25rem;
+    user-select: none;
+    flex-grow: 1;
+    text-align: center;
+  }
+
+  /* Hide nav links by default */
+  #menu-links {
+    display: none;
+    flex-direction: column;
+    gap: 0.5rem;
+    background-color: var(--Dark-gray-blue);
+    padding: 1rem;
+    position: absolute;
+    top: 3rem;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 10;
+  }
+
+  #menu-links.open {
+    display: flex;
+  }
+}
