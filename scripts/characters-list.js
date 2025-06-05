@@ -2,7 +2,6 @@
  * Characters Page Script
  * Handles the display and interaction of the characters list page
  */
-
 import { getUrlSearchParamByKey } from "./modules/utils.js";
 
 let page = Number(getUrlSearchParamByKey("page")) || 1;
