@@ -60,11 +60,13 @@ function updateUI(character, episodes) {
   document.title = character.name;
   // 1. Get the detail container element
   const detailContainer = document.getElementById("characterDetail");
-  const originLink = splitUrlForId(character.origin.url)
-    ? `location-detail.html?locationId=${character.origin.url}`
+  const originId = splitUrlForId(character.origin.url);
+  const originLink = originId
+    ? `location-detail.html?locationId=${originId}`
     : "#";
-  const locationLink = splitUrlForId(character.location.url)
-    ? `location-detail.html?locationId=${character.location.url}`
+  const locationId = splitUrlForId(character.location.url);
+  const locationLink = locationId
+    ? `location-detail.html?locationId=${locationId}`
     : "#";
   // 2. Create character header with image and basic info
   detailContainer.innerHTML = `
