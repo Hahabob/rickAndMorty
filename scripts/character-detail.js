@@ -18,12 +18,6 @@ const characterId = getUrlSearchParamByKey("characterId");
 //   addEventListener("DOMContentLoaded", loadCharacterDetails);
 // }
 
-// 3. Extract episode IDs from character.episode URLs
-// 4. Fetch all episodes this character appears in
-// 5. Update UI with character and episode data
-// 6. Handle any errors
-// 7. Hide loading state
-// throw new Error("loadCharacterDetails not implemented");
 function loadCharacterDetails() {
   // 1. Start by showing loading state
   const BASE_URL = "https://rickandmortyapi.com/api/character";

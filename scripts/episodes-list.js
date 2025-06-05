@@ -20,7 +20,7 @@ const state = {
 function updateUI(data) {
   // TODO: Implement the UI update
   // 1. Get the grid element
-  const grid = document.getElementById("episode");
+  const grid = document.getElementById("episodeContainer");
   // 2. Clear existing content
   grid.innerHTML = "";
   // 3. For each episode in data.results:
@@ -28,9 +28,11 @@ function updateUI(data) {
   //    - Add episode name, air date, episode code, and character count
   //    - Make the card clickable (link to episode-detail.html)
   const episodes = data.results;
+  console.log(episodes);
+
   grid.innerHTML = episodes
     .map((episode) => {
-      const link = `episodde-detail.html?episodeId=${episode.id}`;
+      const link = `episode-detail.html?episodeId=${episode.id}`;
       return `
      <li id="episodeItem_${episode.id}" class="episode-item">
           <h4>

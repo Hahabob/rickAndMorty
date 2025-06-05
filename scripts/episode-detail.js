@@ -1,3 +1,5 @@
+import { getUrlSearchParamByKey } from "./modules/utils.js";
+
 /**
  * Episode Detail Page Script
  * Handles the display of detailed information for a single episode
@@ -7,33 +9,78 @@
  * Loads and displays details for a specific episode
  * @param {string} id - The episode ID to load
  */
+const episodeId = getUrlSearchParamByKey("episodeId");
+
 function loadEpisodeDetails(id) {
-  // TODO: Implement episode detail loading
-  // 1. Show loading state
-  // 2. Fetch episode data using the API module
-  // 3. Extract character IDs from episode.characters URLs
-  // 4. Fetch all characters that appear in this episode
-  // 5. Update UI with episode and character data
-  // 6. Handle any errors
-  // 7. Hide loading state
-  throw new Error("loadEpisodeDetails not implemented");
+  const BASE_URL = "https://rickandmortyapi.com/api/episode";
+
+  fetch(`${BASE_URL}/${episodeId}`)
+    .then((response) => {
+      if (!response.ok) {
+        // If the response status is not 2xx, throw an error
+        throw new Error("HTTP error! Status: " + response.status);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      const promisedCharacters = data.characters.map((url) => {
+        return fetch(url).then((res) => res.json());
+      });
+      return Promise.all([
+        Promise.resolve(data),
+        Promise.all(promisedCharacters),
+      ]);
+    })
+    .then(([data, characters]) => {
+      console.log(characters);
+      updateUI(data, characters);
+    })
+    .catch((error) => {
+      console.log("Fetch error:", error.message);
+    });
 }
 
+function splitUrlForId(url) {
+  return url.split("/").pop();
+}
 /**
  * Updates the UI with episode and character data
  * @param {Object} episode - The episode data
  * @param {Array} characters - Array of character data
  */
 function updateUI(episode, characters) {
-  // TODO: Implement the UI update
-  // 1. Get the detail container element
-  // 2. Create episode header with basic info
-  // 3. Create characters section
-  // 4. For each character:
-  //    - Create a card with image and basic info
-  //    - Make the card link to the character detail page
-  // 5. Handle empty states (no characters)
-  throw new Error("updateUI not implemented");
+  document.title = episode.name;
+
+  const detailContainer = document.getElementById("episodeDetail");
+  const characterId = splitUrlForId(episode.characters);
+  const characterLink = `character-detail.html?characterId=${characterId}`;
+
+  detailContainer.innerHTML = `
+    <div class="episode-info">
+      <h4>${episode.name}</h4>
+          <p>${episode.episode}</p>
+          <p>air date: ${episode.air_date}</p>
+    </div>  
+  `;
+
+  const characterContainer = document.getElementById("episodeCharacter");
+
+  characterContainer.innerHTML = characters
+    .map((character) => {
+      return `           
+     <li id="characterItem_${character.id}" class="character-item">
+     <img src ="${character.image}" alt="${character.name}" />
+              <h4>
+                <a href="${characterLink}" class="character-link">
+                  ${character.name}
+                </a>
+              </h4>
+              <p>status: ${character.status}</p>
+              <p>species: ${character.species}</p>
+            </li>`;
+    })
+    .join("");
 }
 
 // TODO: Initialize the page
@@ -41,3 +88,5 @@ function updateUI(episode, characters) {
 // 2. Validate the ID
 // 3. Load episode details if ID is valid
 // 4. Show error if ID is invalid or missing
+
+addEventListener("DOMContentLoaded", loadEpisodeDetails);
