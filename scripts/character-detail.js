@@ -75,7 +75,10 @@ function updateUI(character, episodes) {
     <img src="${character.image}" alt="${character.name}" />
     <div class="character-info">
       <h4>${character.name}</h4>
-      <p><strong>status:</strong> ${character.status}</p>
+      <p><strong>status:</strong> <span class="${character.status.toLowerCase()}">${
+    character.status
+  }</span></p>
+
       <p><strong>species:</strong> ${character.species}</p>
       <p><strong>gender:</strong> ${character.gender}</p>
       <p>

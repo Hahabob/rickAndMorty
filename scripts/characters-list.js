@@ -37,7 +37,10 @@ function updateUI(data) {
                   ${character.name}
                 </a>
               </h4>
-              <p>status: ${character.status}</p>
+              <p>status: <span class="${character.status.toLowerCase()}">${
+        character.status
+      }</span></p>
+
               <p>species: ${character.species}</p>
             </li>`;
     })

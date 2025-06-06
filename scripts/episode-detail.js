@@ -63,22 +63,22 @@ function updateUI(episode, characters) {
 
   const characterContainer = document.getElementById("episodeCharacter");
 
-  characterContainer.innerHTML = characters
-    .map((character) => {
-      const characterLink = `character-detail.html?characterId=${character.id}`;
-      return `           
-     <li id="characterItem_${character.id}" class="character-item">
-     <img src ="${character.image}" alt="${character.name}" />
-              <h4>
-                <a href="${characterLink}" class="character-link">
-                  ${character.name}
-                </a>
-              </h4>
-              <p>status: ${character.status}</p>
-              <p>species: ${character.species}</p>
-            </li>`;
-    })
-    .join("");
+  characterContainer.innerHTML = `
+  <div class="carousel-wrapper">
+    ${characters
+      .map((character) => {
+        const characterLink = `character-detail.html?characterId=${character.id}`;
+        return `
+          <div class="character-card">
+            <img src="${character.image}" alt="${character.name}" />
+            <h4><a href="${characterLink}" class="character-link">${character.name}</a></h4>
+            <p>Status: ${character.status}</p>
+            <p>Species: ${character.species}</p>
+          </div>`;
+      })
+      .join("")}
+  </div>
+`;
 }
 
 // TODO: Initialize the page
@@ -86,6 +86,5 @@ function updateUI(episode, characters) {
 // 2. Validate the ID
 // 3. Load episode details if ID is valid
 // 4. Show error if ID is invalid or missing
-import { setupNavbarToggle } from "../scripts/modules/utils.js";
-setupNavbarToggle();
+
 addEventListener("DOMContentLoaded", loadEpisodeDetails);
