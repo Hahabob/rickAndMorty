@@ -60,29 +60,31 @@ function updateUI(episode, characters) {
   detailContainer.innerHTML = `
     <div class="episode-info">
       <h4>${episode.name}</h4>
-          <p>${episode.episode}</p>
-          <p>air date: ${episode.air_date}</p>
+      <p>${episode.episode}</p>
+      <p>air date: ${episode.air_date}</p>
     </div>  
   `;
 
   const characterContainer = document.getElementById("episodeCharacter");
 
   characterContainer.innerHTML = `
-  <div class="carousel-wrapper">
     ${characters
       .map((character) => {
         const characterLink = `character-detail.html?characterId=${character.id}`;
         return `
           <div class="character-card">
             <img src="${character.image}" alt="${character.name}" />
-            <h4><a href="${characterLink}" class="character-link">${character.name}</a></h4>
-            <p>Status: ${character.status}</p>
+            <h4><a href="${characterLink}" class="character-link">${
+          character.name
+        }</a></h4>
+            <p>Status: <span class="${character.status.toLowerCase()}">${
+          character.status
+        }</span></p>
             <p>Species: ${character.species}</p>
           </div>`;
       })
       .join("")}
-  </div>
-`;
+  `;
 }
 
 // TODO: Initialize the page

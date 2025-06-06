@@ -54,31 +54,36 @@ function loadLocationDetails() {
 // ✅ [Function 2] - Update the page with the location and its residents
 function updateLocationDetails(location, residents) {
   let html = `
-    <h2>${location.name}</h2>
-    <p><strong>Type:</strong> ${location.type}</p>
-    <p><strong>Dimension:</strong> ${location.dimension}</p>
+    <div class="location-info">
+      <h2>${location.name}</h2>
+      <p><strong>Type:</strong> ${location.type}</p>
+      <p><strong>Dimension:</strong> ${location.dimension}</p>
+    </div>
     <h3>Residents:</h3>
   `;
   // ✅ [Step 12] - Handle no residents
   if (residents.length === 0) {
     html += "<p>No known residents.</p>";
   } else {
-    html += `<div class="residents">`;
+    html += `<div class="episode-characters-wrapper"><div class="carousel-wrapper">`;
     residents.forEach((resident) => {
       const residentLink = `character-detail.html?characterId=${resident.id}`;
       html += `
-        <div class="resident-card">
+        <div class="character-card">
           <img src="${resident.image}" alt="${resident.name}" />
-          <p>              
-          <a href="${residentLink}" class="character-link">
-                ${resident.name}
-          </a>
-          </p>
-          <p>Status: ${resident.status}</p>
+          <h4>              
+            <a href="${residentLink}" class="character-link">
+              ${resident.name}
+            </a>
+          </h4>
+          <p>Status: <span class="${resident.status.toLowerCase()}">${
+        resident.status
+      }</span></p>
+          <p>Species: ${resident.species}</p>
         </div>
       `;
     });
-    html += `</div>`;
+    html += `</div></div>`;
   }
 
   // ✅ [Step 13] - Inject the HTML into the container

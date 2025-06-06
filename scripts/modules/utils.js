@@ -32,14 +32,11 @@ export function setupNavbarToggle() {
 
     if (toggleButton && menuLinks) {
       toggleButton.addEventListener("click", () => {
-        menuLinks.classList.toggle("active");
+        menuLinks.classList.toggle("open");
       });
     }
   });
 }
-// toggleButton.addEventListener("click", () => {
-//   menuLinks.classList.toggle("open");
-// });
 
 // === loading spinner global function ===
 
