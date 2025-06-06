@@ -2,7 +2,10 @@ import {
   getUrlSearchParamByKey,
   showSpinner,
   hideSpinner,
+  setupNavbarToggle,
 } from "./modules/utils.js";
+
+setupNavbarToggle();
 
 /**
  * Episode Detail Page Script

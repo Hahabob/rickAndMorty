@@ -5,7 +5,10 @@ import {
   getUrlSearchParamByKey,
   showSpinner,
   hideSpinner,
+  setupNavbarToggle,
 } from "./modules/utils.js";
+
+setupNavbarToggle();
 
 // ✅ [Step 2] - Extract the ID from the URL
 const locationId = getUrlSearchParamByKey("locationId");
@@ -53,6 +56,7 @@ function loadLocationDetails() {
 
 // ✅ [Function 2] - Update the page with the location and its residents
 function updateLocationDetails(location, residents) {
+  document.title = location.name;
   let html = `
     <div class="location-info">
       <h2>${location.name}</h2>
@@ -89,5 +93,3 @@ function updateLocationDetails(location, residents) {
   // ✅ [Step 13] - Inject the HTML into the container
   container.innerHTML = html;
 }
-import { setupNavbarToggle } from "../scripts/modules/utils.js";
-setupNavbarToggle();

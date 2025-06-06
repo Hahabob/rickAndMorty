@@ -2,7 +2,10 @@ import {
   getUrlSearchParamByKey,
   showSpinner,
   hideSpinner,
+  setupNavbarToggle,
 } from "./modules/utils.js";
+
+setupNavbarToggle();
 
 /**
  * Character Detail Page Script
@@ -134,7 +137,5 @@ function updateUI(character, episodes) {
 // 2. Validate the ID
 // 3. Load character details if ID is valid
 // 4. Show error if ID is invalid or missing
-import { setupNavbarToggle } from "../scripts/modules/utils.js";
-setupNavbarToggle();
 
 addEventListener("DOMContentLoaded", loadCharacterDetails);

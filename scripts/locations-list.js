@@ -6,7 +6,12 @@ import {
   getUrlSearchParamByKey,
   showSpinner,
   hideSpinner,
+  setupNavbarToggle,
+  debounce,
+  search,
 } from "./modules/utils.js";
+
+setupNavbarToggle();
 
 let page = Number(getUrlSearchParamByKey("page")) || 1;
 const BASE_URL = "https://rickandmortyapi.com/api/location";
@@ -104,16 +109,46 @@ function loadLocations() {
     });
 }
 
+const searchInput = document.getElementById("searchInput");
+
+const debouncedSearch = debounce((event) => {
+  const query = event.target.value;
+
+  search({
+    baseUrl: BASE_URL,
+    query,
+    onSuccess: (data) => {
+      if (!data) {
+        // No query: load full locations list
+        loadLocations().then(updateUI);
+      } else {
+        updateUI(data);
+      }
+    },
+    onLoading: (isLoading) => {
+      const grid = document.getElementById("gridElement");
+      if (isLoading) {
+        grid.innerHTML = "<p>Searching...</p>";
+      }
+    },
+    onError: (message) => {
+      const grid = document.getElementById("gridElement");
+      grid.innerHTML = `<p>${message}</p>`;
+    },
+    customErrorMessage: "No locations match your search",
+  });
+}, 300);
+
 // TODO: Add event listeners
 // 1. Previous page button click
 // 2. Next page button click
 // 3. Search input with debounce
 // 4. Call loadLocations() on page load
-import { setupNavbarToggle } from "../scripts/modules/utils.js";
-setupNavbarToggle();
 addEventListener("DOMContentLoaded", () => {
   document.getElementById("nextBtn").addEventListener("click", nextPage);
   document.getElementById("prevBtn").addEventListener("click", prevPage);
+
+  searchInput.addEventListener("input", debouncedSearch);
 
   loadLocations().then((data) => updateUI(data));
 });

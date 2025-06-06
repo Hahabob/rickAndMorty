@@ -432,3 +432,10 @@ nav {
   cursor: not-allowed;
   transform: none;
 }
+
+
+/* scrollbar Firefox support */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f0f0f0;
+}

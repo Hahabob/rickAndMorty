@@ -6,7 +6,12 @@ import {
   getUrlSearchParamByKey,
   showSpinner,
   hideSpinner,
+  setupNavbarToggle,
+  debounce,
+  search,
 } from "./modules/utils.js";
+
+setupNavbarToggle();
 
 let page = Number(getUrlSearchParamByKey("page")) || 1;
 const BASE_URL = "https://rickandmortyapi.com/api/character";
@@ -108,16 +113,47 @@ function loadCharacters() {
     });
 }
 
+const searchInput = document.getElementById("searchInput");
+
+const debouncedSearch = debounce((event) => {
+  const query = event.target.value;
+
+  search({
+    baseUrl: BASE_URL,
+    query,
+    onSuccess: (data) => {
+      if (!data) {
+        // No query: load full character list
+        loadCharacters().then(updateUI);
+      } else {
+        updateUI(data);
+      }
+    },
+    onLoading: (isLoading) => {
+      const grid = document.getElementById("gridElement");
+      if (isLoading) {
+        grid.innerHTML = "<p>Searching...</p>";
+      }
+    },
+    onError: (message) => {
+      const grid = document.getElementById("gridElement");
+      grid.innerHTML = `<p>${message}</p>`;
+    },
+    customErrorMessage: "No characters match your search",
+  });
+}, 300);
+
 // TODO: Add event listeners
 // 1. Previous page button click
 // 2. Next page button click
 // 3. Search input with debounce
 // 4. Call loadCharacters() on page load
-import { setupNavbarToggle } from "../scripts/modules/utils.js";
-setupNavbarToggle();
+
 addEventListener("DOMContentLoaded", () => {
   document.getElementById("nextBtn").addEventListener("click", nextPage);
   document.getElementById("prevBtn").addEventListener("click", prevPage);
+
+  searchInput.addEventListener("input", debouncedSearch);
 
   loadCharacters().then((data) => updateUI(data));
 });
