@@ -2,12 +2,14 @@
  * Characters Page Script
  * Handles the display and interaction of the characters list page
  */
-
-import { getUrlSearchParamByKey } from "./modules/utils.js";
+import {
+  getUrlSearchParamByKey,
+  showSpinner,
+  hideSpinner,
+} from "./modules/utils.js";
 
 let page = Number(getUrlSearchParamByKey("page")) || 1;
 const BASE_URL = "https://rickandmortyapi.com/api/character";
-// State management for the characters page
 
 /**
  * Updates the UI with character data
@@ -85,8 +87,7 @@ function updateURL() {
  * Loads character data from the API
  */
 function loadCharacters() {
-  // TODO: Implement character loading
-  // 1. Show loading stat
+  showSpinner();
   // 2. Fetch character data using the API module
   return fetch(`${BASE_URL}?page=${page}`)
     .then((response) => {
@@ -98,15 +99,13 @@ function loadCharacters() {
     })
     .then((data) => {
       console.log(data);
+      hideSpinner();
       return data;
     })
     .catch((error) => {
+      hideSpinner();
       console.log("Fetch error:", error.message);
     });
-  // 3. Update UI with the results
-  // 4. Handle any errors
-  // 5. Hide loading state
-  // throw new Error("loadCharacters not implemented");
 }
 
 // TODO: Add event listeners
