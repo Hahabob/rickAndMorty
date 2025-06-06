@@ -143,6 +143,28 @@ const debouncedSearch = debounce((event) => {
   });
 }, 300);
 
+/**
+ * Redirects to a random character's detail page
+ */
+async function goToRandomCharacter() {
+  try {
+    showSpinner();
+    // Get the total number of characters
+    const response = await fetch(BASE_URL);
+    const data = await response.json();
+    const totalCharacters = data.info.count;
+
+    // Generate a random character ID
+    const randomId = Math.floor(Math.random() * totalCharacters) + 1;
+
+    // Redirect to the character detail page
+    window.location.href = `character-detail.html?characterId=${randomId}`;
+  } catch (error) {
+    console.error("Error fetching random character:", error);
+    hideSpinner();
+  }
+}
+
 // TODO: Add event listeners
 // 1. Previous page button click
 // 2. Next page button click
@@ -152,6 +174,9 @@ const debouncedSearch = debounce((event) => {
 addEventListener("DOMContentLoaded", () => {
   document.getElementById("nextBtn").addEventListener("click", nextPage);
   document.getElementById("prevBtn").addEventListener("click", prevPage);
+  document
+    .getElementById("randomCharacter")
+    .addEventListener("click", goToRandomCharacter);
 
   searchInput.addEventListener("input", debouncedSearch);
 

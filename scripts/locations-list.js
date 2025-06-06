@@ -139,6 +139,28 @@ const debouncedSearch = debounce((event) => {
   });
 }, 300);
 
+/**
+ * Redirects to a random location's detail page
+ */
+async function goToRandomLocation() {
+  try {
+    showSpinner();
+    // Get the total number of locations
+    const response = await fetch(BASE_URL);
+    const data = await response.json();
+    const totalLocations = data.info.count;
+
+    // Generate a random location ID
+    const randomId = Math.floor(Math.random() * totalLocations) + 1;
+
+    // Redirect to the location detail page
+    window.location.href = `location-detail.html?locationId=${randomId}`;
+  } catch (error) {
+    console.error("Error fetching random location:", error);
+    hideSpinner();
+  }
+}
+
 // TODO: Add event listeners
 // 1. Previous page button click
 // 2. Next page button click
@@ -147,6 +169,9 @@ const debouncedSearch = debounce((event) => {
 addEventListener("DOMContentLoaded", () => {
   document.getElementById("nextBtn").addEventListener("click", nextPage);
   document.getElementById("prevBtn").addEventListener("click", prevPage);
+  document
+    .getElementById("randomCharacter")
+    .addEventListener("click", goToRandomLocation);
 
   searchInput.addEventListener("input", debouncedSearch);
 

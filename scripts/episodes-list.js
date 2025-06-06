@@ -138,6 +138,28 @@ const debouncedSearch = debounce((event) => {
   });
 }, 300);
 
+/**
+ * Redirects to a random episode's detail page
+ */
+async function goToRandomEpisode() {
+  try {
+    showSpinner();
+    // Get the total number of episodes
+    const response = await fetch(BASE_URL);
+    const data = await response.json();
+    const totalEpisodes = data.info.count;
+
+    // Generate a random episode ID
+    const randomId = Math.floor(Math.random() * totalEpisodes) + 1;
+
+    // Redirect to the episode detail page
+    window.location.href = `episode-detail.html?episodeId=${randomId}`;
+  } catch (error) {
+    console.error("Error fetching random episode:", error);
+    hideSpinner();
+  }
+}
+
 // TODO: Add event listeners
 // 1. Previous page button click
 // 2. Next page button click
@@ -147,6 +169,9 @@ const debouncedSearch = debounce((event) => {
 addEventListener("DOMContentLoaded", () => {
   document.getElementById("nextBtn").addEventListener("click", nextPage);
   document.getElementById("prevBtn").addEventListener("click", prevPage);
+  document
+    .getElementById("randomCharacter")
+    .addEventListener("click", goToRandomEpisode);
 
   searchInput.addEventListener("input", debouncedSearch);
 
