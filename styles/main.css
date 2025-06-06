@@ -65,6 +65,9 @@ textarea,
 select {
   font: inherit;
 }
+li{
+  list-style: none;
+}
 
 /* === NAVIGATION === */
 nav {
