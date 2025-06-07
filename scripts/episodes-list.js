@@ -141,23 +141,22 @@ const debouncedSearch = debounce((event) => {
 /**
  * Redirects to a random episode's detail page
  */
-async function goToRandomEpisode() {
-  try {
-    showSpinner();
-    // Get the total number of episodes
-    const response = await fetch(BASE_URL);
-    const data = await response.json();
-    const totalEpisodes = data.info.count;
+function goToRandomEpisode() {
+  showSpinner();
 
-    // Generate a random episode ID
-    const randomId = Math.floor(Math.random() * totalEpisodes) + 1;
-
-    // Redirect to the episode detail page
-    window.location.href = `episode-detail.html?episodeId=${randomId}`;
-  } catch (error) {
-    console.error("Error fetching random episode:", error);
-    hideSpinner();
-  }
+  fetch(BASE_URL)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      const totalEpisodes = data.info.count;
+      const randomId = Math.floor(Math.random() * totalEpisodes) + 1;
+      window.location.href = `episode-detail.html?episodeId=${randomId}`;
+    })
+    .catch(function (error) {
+      console.error("Error fetching random episode:", error);
+      hideSpinner();
+    });
 }
 
 // TODO: Add event listeners

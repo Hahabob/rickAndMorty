@@ -142,23 +142,22 @@ const debouncedSearch = debounce((event) => {
 /**
  * Redirects to a random location's detail page
  */
-async function goToRandomLocation() {
-  try {
-    showSpinner();
-    // Get the total number of locations
-    const response = await fetch(BASE_URL);
-    const data = await response.json();
-    const totalLocations = data.info.count;
+function goToRandomLocation() {
+  showSpinner();
 
-    // Generate a random location ID
-    const randomId = Math.floor(Math.random() * totalLocations) + 1;
-
-    // Redirect to the location detail page
-    window.location.href = `location-detail.html?locationId=${randomId}`;
-  } catch (error) {
-    console.error("Error fetching random location:", error);
-    hideSpinner();
-  }
+  fetch(BASE_URL)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      const totalLocations = data.info.count;
+      const randomId = Math.floor(Math.random() * totalLocations) + 1;
+      window.location.href = `location-detail.html?locationId=${randomId}`;
+    })
+    .catch(function (error) {
+      console.error("Error fetching random location:", error);
+      hideSpinner();
+    });
 }
 
 // TODO: Add event listeners
